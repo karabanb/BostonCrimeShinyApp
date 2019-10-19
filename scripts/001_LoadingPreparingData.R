@@ -4,6 +4,7 @@
 library(tidyverse)
 library(tibbletime)
 
+
 #### LOADING DATA ######################################################################################################
 
 raw_data <- read_csv('data/crime.csv')
