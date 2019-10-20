@@ -2,33 +2,34 @@
 #### LIBRARIES ######################################################################################################### 
 
 library(shiny)
+library(shinydashboard)
 library(tidyverse)
 library(tibbletime)
 
 
-#### LOADING DATA ######################################################################################################
+#### DEFINING DASHBOARD'S CONTENT ######################################################################################
 
 
+# Define UI for application that draws a barplots
 
-# Define UI for application that draws a histogram
-shinyUI(fluidPage(
+sidebar <- dashboardSidebar(
+    radioButtons("period",
+                 "Choose period:",
+                 choices = c('Year' = 'yearly', 'Quarter' = 'quarterly', 'Month' = 'monthly'),
+                 selected = 'monthly')
+)
 
-    # Application title
-    titlePanel("Chicago Crime Dashboard"),
 
-    # Sidebar with a slider input for number of bins
-    sidebarLayout(
-        sidebarPanel(
-            radioButtons("period",
-                        "Choose period:",
-                        choices = c('Year' = 'yearly', 'Quarter' = 'quarterly', 'Month' = 'monthly'),
-                        selected = 'monthly')
-        ),
+body <- dashboardBody(
+    plotOutput('plot_stacked'),
+    plotOutput("plot_fill")
+    
+)
 
-        # Show a plot of the generated distribution
-        mainPanel(
-            plotOutput('plot_stacked'),
-            plotOutput("plot_fill")
-        )
-    )
-))
+
+ui <- dashboardPage(
+    header = dashboardHeader(),
+    sidebar = sidebar,
+    body = body
+)
+
