@@ -9,7 +9,7 @@ library(tibbletime)
 
 raw_data <- read_csv('data/crime.csv')
 
-preparded_data <- raw_data %>%
+prepared_data <- raw_data %>%
   mutate(OCCURRED_ON_DATE = as.Date(OCCURRED_ON_DATE),
          CODE_GROUP = fct_lump(OFFENSE_CODE_GROUP %>% as.factor, prop = 0.04),
          ) %>%
@@ -27,20 +27,28 @@ preparded_data <- raw_data %>%
   na.omit() %>%
   arrange(OCCURRED_ON_DATE) 
 
-save(prepared_data, file = 'data/001_PrepraredData.Rdata')
+save(prepared_data, file = 'data/001_PreparedData.Rdata')
 
-prepared_data <- tmp %>%
+# prepared_data <- tmp %>%
+#   as_tbl_time(OCCURRED_ON_DATE) %>%
+#   collapse_by("monthly") %>%
+#   group_by(OCCURRED_ON_DATE, CODE_GROUP) %>%
+#   summarise(n = n())
+# 
+# 
+# 
+# 
+# ggplot(prepared_data, aes(OCCURRED_ON_DATE, n, fill = CODE_GROUP)) +
+#   geom_col(position = 'fill') +
+#   theme_bw() +
+#   scale_fill_viridis_d()
+
+
+prepared_data %>%
   as_tbl_time(OCCURRED_ON_DATE) %>%
-  collapse_by("monthly") %>%
-  group_by(OCCURRED_ON_DATE, CODE_GROUP) %>%
-  summarise(n = n())
-
-
-
-
-ggplot(prepared_data, aes(OCCURRED_ON_DATE, n, fill = CODE_GROUP)) +
-  geom_col(position = 'fill') +
-  theme_bw() +
-  scale_fill_viridis_d()
+  collapse_by(period = 'monthly') %>%
+  group_by(as.character(OCCURRED_ON_DATE), CODE_GROUP) %>%
+  summarise(n = n()) %>%
+  rename(period = `as.character(OCCURRED_ON_DATE)`)
   
   
