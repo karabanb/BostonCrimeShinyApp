@@ -15,7 +15,7 @@ z <- prepared_data %>%
   summarise(occr = n()) %>%
   mutate(OCCURRED_ON_DATE = as.Date.character(OCCURRED_ON_DATE, '%YYYY'))
 
-x <- 'quarterly'
+
 
 
 
@@ -30,3 +30,28 @@ prepared_data %>%
     )
   ))
   
+x <- 'yearly'
+
+if (x == 'yearly'){
+  prepared_data %>%
+    mutate(periods = year(OCCURRED_ON_DATE)) %>%
+    tail()
+} else 
+  if (x == 'monthly'){
+  prepared_data %>%
+    mutate(periods = month(OCCURRED_ON_DATE)) %>%
+    tail()
+} else {
+  prepared_data %>%
+    mutate(periods = quarter(OCCURRED_ON_DATE)) %>%
+    tail()
+}
+
+
+prepared_data  %>%
+  mutate(periods = ifelse(x == 'yearly', year(OCCURRED_ON_DATE) ,
+                                       if_else(x== 'quarterly', quarter(OCCURRED_ON_DATE), month(OCCURRED_ON_DATE)
+                                       ))) %>% tail()
+  
+  group_by(periods, CODE_GROUP) %>%
+  summarise(n = n())
