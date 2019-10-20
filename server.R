@@ -5,6 +5,7 @@ library(shiny)
 library(tidyverse)
 library(tibbletime)
 library(zoo)
+library(plotly)
 
 
 #### LOADING DATA ######################################################################################################
@@ -44,10 +45,14 @@ shinyServer(function(input, output) {
   
   #### Drawing stacked barplot -----------------------------------------------------------------------------------------
   
+  alpha = 0.8
+  
   output$plot_stacked <- renderPlot({
     data <- aggregated_data()
     ggplot(data, aes(periods, n, fill = CODE_GROUP)) +
-      geom_col(position = 'stack') +
+      geom_col(position = 'stack', alpha = alpha) +
+      scale_fill_viridis_d() +
+      ggtitle('Number of crimes in each category in choosen periods') +
       theme_bw() +
       labs(y = 'n') +
       theme(axis.text.x = element_text(angle = 90))
@@ -55,12 +60,14 @@ shinyServer(function(input, output) {
     })
    
   
-  #### Drawing stacked barplot -----------------------------------------------------------------------------------------
+  #### Drawing filled barplot -----------------------------------------------------------------------------------------
   
    output$plot_fill <- renderPlot({
      data <- aggregated_data()
      ggplot(data, aes(periods, n, fill = CODE_GROUP)) +
-       geom_col(position = 'fill') +
+       geom_col(position = 'fill', alpha = alpha) +
+       scale_fill_viridis_d() +
+       ggtitle('Share of crimes in each category in choosen periods') +
        theme_bw() +
        labs(y = '%') +
        theme(axis.text.x = element_text(angle = 90))

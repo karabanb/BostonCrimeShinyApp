@@ -28,7 +28,7 @@ body <- dashboardBody(
 
 
 ui <- dashboardPage(
-    header = dashboardHeader(),
+    header = dashboardHeader(title = 'Boston Cirme Dashboard'),
     sidebar = sidebar,
     body = body
 )
