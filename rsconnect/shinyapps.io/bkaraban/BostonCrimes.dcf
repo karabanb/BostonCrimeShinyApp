@@ -1,0 +1,13 @@
+name: BostonCrimes
+title: BostonCrimes
+username:
+account: bkaraban
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1355835
+bundleId: 2519725
+url: https://bkaraban.shinyapps.io/BostonCrimes/
+when: 1571642536.88703
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: data/001_PrepraredData.Rdata|data/crime.csv|data/offense_codes.csv
