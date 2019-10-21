@@ -2,10 +2,9 @@
 #### LIBRARIES ######################################################################################################### 
 
 library(shiny)
+library(shinydashboard)
 library(tidyverse)
-library(tibbletime)
-library(zoo)
-library(plotly)
+
 
 
 #### LOADING DATA ######################################################################################################
@@ -28,7 +27,7 @@ shinyServer(function(input, output) {
     }
     else {
       prepared_data %>%
-        mutate(periods = paste(format(OCCURRED_ON_DATE, '%Y'),quarters(OCCURRED_ON_DATE)))
+        mutate(periods = paste(format(OCCURRED_ON_DATE, '%Y'), quarters(OCCURRED_ON_DATE)))
     }
   }
   }

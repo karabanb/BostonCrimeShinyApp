@@ -4,7 +4,6 @@
 library(shiny)
 library(shinydashboard)
 library(tidyverse)
-library(tibbletime)
 
 
 #### DEFINING DASHBOARD'S CONTENT ######################################################################################
@@ -21,8 +20,8 @@ sidebar <- dashboardSidebar(
 
 
 body <- dashboardBody(
-    plotOutput('plot_stacked'),
-    plotOutput("plot_fill")
+    fluidRow(box(plotOutput('plot_stacked'),width = 12, collapsible = TRUE)),
+    fluidRow(box(plotOutput("plot_fill"), width = 12, collapsible = TRUE))
     
 )
 
