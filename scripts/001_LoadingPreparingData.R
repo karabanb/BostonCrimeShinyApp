@@ -10,7 +10,7 @@ library(tibbletime)
 raw_data <- read_csv('data/crime.csv')
 
 prepared_data <- raw_data %>%
-  mutate(OCCURRED_ON_DATE = as.Date(OCCURRED_ON_DATE),
+  mutate(#OCCURRED_ON_DATE = as.Date(OCCURRED_ON_DATE),
          CODE_GROUP = fct_lump(OFFENSE_CODE_GROUP %>% as.factor, prop = 0.04),
          ) %>%
   filter(YEAR %in% c(2016, 2017), !CODE_GROUP %in% 'Other') %>%
